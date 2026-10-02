@@ -15,7 +15,7 @@
 ## 系统要求
 
 - Windows 10/11（64位）
-- 无需安装 Python，开箱即用
+- 无需安装 Python（使用便携版时）
 
 ## 安装
 
@@ -26,11 +26,34 @@
 ### 方式二：源码运行
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/clehj/CharExtractor.git
 cd CharExtractor
 pip install -r requirements.txt
 python main.py
+````
+
+## 依赖字体
+
+本项目需要 **Meiryo** 字体。由于版权原因，字体文件未包含在仓库中，请自行准备。
+
+**Windows 用户：**
+
+1. 打开 `C:\Windows\Fonts\`
+2. 复制 `meiryo.ttc` 和 `meiryob.ttc`
+3. 粘贴到项目的 `font/` 目录
+
+**其他系统：** 需自行获取该字体文件。
+
+放置完成后，目录结构应为：
+
+```text
+CharExtractor/
+└── font/
+    ├── meiryo.ttc
+    └── meiryob.ttc
 ```
+
+> 缺少字体文件时，程序将无法正常生成图片。
 
 ## 使用说明
 
@@ -53,26 +76,35 @@ pyinstaller --name "CharExtractor" --windowed --icon=icon.ico --add-data "style_
 
 ## 项目结构
 
-```
+```text
 CharExtractor/
 ├── main.py                # 程序入口
+├── build.py               # 打包脚本
+├── requirements.txt       # 依赖列表
+├── .gitignore
+├── README.md
 ├── core/                  # 核心模块
+│   ├── __init__.py
 │   ├── extractor.py       # 文本提取器
 │   ├── generator.py       # 图片生成器
 │   └── constants.py       # 常量定义
 ├── gui/                   # GUI 模块
+│   ├── __init__.py
 │   ├── main_window.py     # 主窗口
 │   ├── ui_main_window.py  # UI 构建
 │   ├── about_dialog.py    # 关于对话框
 │   ├── drop_area.py       # 拖拽区域
+│   ├── workers.py         # 后台线程
 │   └── style.py           # 样式常量
-└── fonts/                 # 字体文件目录
+├── utils/
+│   └── string_utils.py    # 字符串工具
+└── font/                  # 字体目录（需自行放入，见上）
 ```
 
 ## 技术栈
 
 | 模块 | 说明 |
-|---|---|
+| --- | --- |
 | PyQt5 5.15 | GUI 框架 |
 | Pillow | 图片生成 |
 | PyInstaller 6.x | 打包为独立 EXE |
@@ -80,3 +112,4 @@ CharExtractor/
 ## License
 
 MIT License © 2024 clehj
+
